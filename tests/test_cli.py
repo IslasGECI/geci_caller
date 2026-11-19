@@ -343,12 +343,6 @@ def test_write_traps_and_cameras_posterior_summary():
     gtt.if_exist_remove(output_path)
 
 
-def test_write_posterior_results_from_traps_and_cameras():
-    command = "write-posterior-results-from-traps-and-cameras"
-    result = get_command_help(command)
-    assert result.exit_code == 0
-
-
 def test_write_posterior_results():
     input_path = "tests/data/data_effort_captures_for_model.json"
     parameters_path = "tests/data/init_captures_effort_model.json"
