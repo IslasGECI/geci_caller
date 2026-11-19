@@ -313,6 +313,34 @@ def test_write_csv_probability_entrypoint():
     gtt.if_exist_remove(output_path)
 
 
+def test_write_traps_and_cameras_posterior_summary():
+    traps_path = "tests/data/esfuerzo_capturas_mensuales_gatos_socorro.csv"
+    cameras_path = "tests/data/esfuerzo_detecciones_camaras_trampa_mensuales_gatos_socorro.csv"
+    parameters_path = "tests/data/init_traps_cameras_model.json"
+    output_path = "traps_and_cameras_posterior_summary.json"
+
+    gtt.if_exist_remove(output_path)
+
+    result = runner.invoke(
+        cli,
+        [
+            "write-traps-and-cameras-posterior-summary",
+            "--traps-path",
+            traps_path,
+            "--cameras-path",
+            cameras_path,
+            "--initial-parameters-path",
+            parameters_path,
+            "--output-path",
+            output_path,
+        ],
+    )
+    assert result.exit_code == 0
+    gtt.assert_exist(output_path)
+    assert_code_200(result)
+    gtt.if_exist_remove(output_path)
+
+
 def test_write_posterior_results():
     input_path = "tests/data/data_effort_captures_for_model.json"
     parameters_path = "tests/data/init_captures_effort_model.json"
