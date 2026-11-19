@@ -1,4 +1,5 @@
-import io
+from geci_caller.files_and_buffer_helpers import read_file_as_buffer
+
 import requests
 
 
@@ -17,9 +18,3 @@ def call_bayesian_model(traps_cameras_effort_captures_path, parameters_path):
     data = {"model_type": "traps-and-cameras"}
     response = requests.post(url, files=files, data=data)
     return response
-
-
-def read_file_as_buffer(file_path):
-    with open(file_path, "rb") as file:
-        buffer_file = io.BytesIO(file.read())
-    return buffer_file
