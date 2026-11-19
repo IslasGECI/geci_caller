@@ -1,5 +1,5 @@
 from geci_caller import __version__
-from geci_caller.files_and_buffer_helpers import read_file_as_buffer
+from geci_caller.files_and_buffer_helpers import read_file_as_buffer, write_response_content
 
 
 import json
@@ -338,8 +338,3 @@ def print_status_code(response):
 def version():
     version = __version__
     print(version)
-
-
-def write_response_content(output_path, response):
-    with open(output_path, "wb") as out_file:
-        out_file.write(response.content)
