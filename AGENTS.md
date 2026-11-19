@@ -15,6 +15,7 @@
 ## Boundaries and conventions
 
 - Entry point: `[tool.flit.scripts] geci-caller = "geci_caller.cli:cli"`; commands are `@cli.command()` functions in `geci_caller/cli.py` (`pyproject.toml`, `geci_caller/cli.py`).
+- Buffer/response I/O helpers live in `geci_caller/files_and_buffer_helpers.py`; `geci_caller/run_stan_endpoint.py::call_bayesian_model` posts to the traps-and-cameras model endpoint and is referenced only by `tests/test_run_stan_endpoint.py` (`geci_caller/`, `tests/`).
 - Command and option names are kebab-case (`geci-caller --help`, `tests/test_cli.py`).
 - Tests call live APIs at `http://islasgeci.org:100` and `:200`; no HTTP mocking is used (`geci_caller/cli.py`, `tests/test_cli.py`).
 - Tests write generated files into the repository root, for example `posteriors.csv`, `figure.png`, and `cumulative_by_flight.png`; those files are untracked (`tests/test_cli.py`, `git status --porcelain`).
