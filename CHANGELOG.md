@@ -18,10 +18,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.1.0] - 2026-05-29
 
 ### Added
-- Add CLI command `render-instantaneous-and-cumulative-cpue-time-series`.
+- CLI command `render-instantaneous-and-cumulative-cpue-time-series`.
 
 ### Changed
-- Deprecation warning to CLI command `write-instantaneous-and-cumulative-cpue-time-series-plot`. Follows the team updated [naming convention](https://islas.dev/guia_de_estilo/STYLEGUIDE).
+- CLI commands now abort on HTTP error responses; previously several only printed the status code.
+
+### Removed
+- CLI command `write-instantaneous-and-cumulative-cpue-time-series-plot`, replaced by `render-instantaneous-and-cumulative-cpue-time-series` in 2.1.0, following the team [naming convention](https://islas.dev/guia_de_estilo/STYLEGUIDE).
 
 ## [2.0.0] - 2026-04-15
 ### Added
@@ -141,7 +144,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.4.0] - 2023-08-31
 
 
-[unreleased]: https://github.com/IslasGECI/api_caller/compare/v2.0.0...HEAD
+[unreleased]: https://github.com/IslasGECI/api_caller/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/IslasGECI/api_caller/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/IslasGECI/api_caller/compare/v1.0.1...v2.0.0
 [1.0.1]: https://github.com/IslasGECI/api_caller/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/IslasGECI/api_caller/compare/v0.21.0...v1.0.0
