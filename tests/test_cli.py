@@ -305,11 +305,13 @@ def test_write_csv_probability_entrypoint():
     )
     assert "http://islasgeci.org:100/write_effort_and_captures_with_probability" in response.url
 
+    gtt.if_exist_remove(output_path)
     resolution = 4
     response = write_csv_probability(
         input_path, bootstrapping_number, output_path, window_length, resolution
     )
     assert "http://islasgeci.org:100/write_effort_and_captures_with_probability" in response.url
+    gtt.if_exist_remove(output_path)
 
 
 def test_write_posterior_results():
@@ -360,8 +362,8 @@ def test_write_probability_figure_entrypoint():
     response = write_probability_progress_figure(input_path, output_path)
     assert "http://islasgeci.org:100/write_probability_figure" in response.url
     gtt.assert_exist(output_path)
-
     assert_figure_format(format, output_path)
+    gtt.if_exist_remove(output_path)
 
 
 def test_render_instantaneous_and_cumulative_cpue_time_series():
@@ -423,6 +425,7 @@ def test_plot_cumulative_series_cpue_by_season():
     )
     assert result.exit_code == 1
     assert result.exception.response.status_code == 500
+    gtt.if_exist_remove(output_path)
 
 
 def test_plot_cumulative_series_cpue_by_flight_entrypoint():
