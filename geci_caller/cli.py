@@ -1,9 +1,11 @@
-import geci_caller as gc
+from geci_caller import __version__
+from geci_caller.files_and_buffer_helpers import read_file_as_buffer
+
+
 import json
 import pandas as pd
 import requests
 import typer
-import io
 import logging
 
 logging.basicConfig(level=logging.DEBUG)
@@ -334,14 +336,8 @@ def print_status_code(response):
 
 @cli.command()
 def version():
-    version = gc.__version__
+    version = __version__
     print(version)
-
-
-def read_file_as_buffer(file_path):
-    with open(file_path, "rb") as file:
-        buffer_file = io.BytesIO(file.read())
-    return buffer_file
 
 
 def write_response_content(output_path, response):
