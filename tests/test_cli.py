@@ -12,7 +12,6 @@ from geci_caller import (
 import geci_test_tools as gtt
 from typer.testing import CliRunner
 import json
-import os
 from PIL import Image
 
 runner = CliRunner()
