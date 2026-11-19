@@ -24,6 +24,8 @@ def test_write_population_status_from_mixed_methods():
     assert result.exit_code == 0
 
     output_path = "population_status_mixed_methods.json"
+
+    gtt.if_exist_remove(output_path)
     result = runner.invoke(
         cli,
         [
@@ -37,6 +39,8 @@ def test_write_population_status_from_mixed_methods():
         ],
     )
     assert_code_200(result)
+    gtt.assert_exist(output_path)
+    gtt.if_exist_remove(output_path)
 
 
 def test_write_bootstrap_progress_intervals_json():
@@ -45,6 +49,9 @@ def test_write_bootstrap_progress_intervals_json():
     assert_command_with_input_and_output_paths(result)
     assert "--bootstrapping-number " in result.stdout
     assert " Number of bootstraps " in result.stdout
+
+    output_path = "progress_intervals.json"
+    gtt.if_exist_remove(output_path)
     result = runner.invoke(
         cli,
         [
@@ -54,10 +61,12 @@ def test_write_bootstrap_progress_intervals_json():
             "--bootstrapping-number",
             10,
             "--output-path",
-            "progress_intervals.json",
+            output_path,
         ],
     )
     assert_code_200(result)
+    gtt.assert_exist(output_path)
+    gtt.if_exist_remove(output_path)
 
 
 def test_write_aerial_monitoring():
@@ -83,6 +92,7 @@ def test_write_aerial_monitoring():
     )
     assert_code_200(result)
     gtt.assert_exist(output_path)
+    gtt.if_exist_remove(output_path)
 
 
 def test_filter_by_method():
@@ -108,6 +118,7 @@ def test_filter_by_method():
     )
     assert_code_200(result)
     gtt.assert_exist(output_path)
+    gtt.if_exist_remove(output_path)
 
 
 def test_write_population_status():
@@ -115,8 +126,7 @@ def test_write_population_status():
     input_path = "tests/data/feral_goat_capture_effort.csv"
     output_path = "population_status.json"
 
-    if os.path.exists(output_path):
-        os.remove(output_path)
+    gtt.if_exist_remove(output_path)
 
     result = get_command_help(command)
     assert_command_with_input_and_output_paths(result)
@@ -140,6 +150,7 @@ def test_write_population_status():
         data = json.load(f)
     assert data["capturas"] == 11
     assert data["progress_probability"] == 1.0
+    gtt.if_exist_remove(output_path)
 
 
 def test_write_probability_progress_figure():
@@ -167,6 +178,7 @@ def test_plot_comparative_catch_curves():
     socorro_path = "tests/data/cumulative_effort_and_captures_for_year.csv"
     guadalupe_path = "tests/data/cumulative_effort_and_captures_for_year_guadalupe.csv"
     output_path = "figure.png"
+    gtt.if_exist_remove(output_path)
     result = runner.invoke(
         cli,
         [
@@ -183,6 +195,7 @@ def test_plot_comparative_catch_curves():
     response = plot_comparative_catch_curves(socorro_path, guadalupe_path, output_path)
     assert "http://islasgeci.org:100/plot_comparative_catch_curves" in response.url
     gtt.assert_exist(output_path)
+    gtt.if_exist_remove(output_path)
 
 
 def test_plot_comparative_yearly_cpue():
@@ -198,6 +211,7 @@ def test_plot_comparative_yearly_cpue():
     socorro_path = "tests/data/esfuerzo_capturas_mensuales_gatos_socorro.csv"
     guadalupe_path = "tests/data/esfuerzo_capturas_gatos_guadalupe_ISO_for_tests.csv"
     output_path = "comparative_cpue.png"
+    gtt.if_exist_remove(output_path)
     result = runner.invoke(
         cli,
         [
@@ -214,6 +228,7 @@ def test_plot_comparative_yearly_cpue():
     response = plot_comparative_yearly_cpue(socorro_path, guadalupe_path, output_path)
     assert "http://islasgeci.org:100/plot_comparative_yearly_cpue" in response.url
     gtt.assert_exist(output_path)
+    gtt.if_exist_remove(output_path)
 
 
 def test_write_instantaneous_and_cumulative_cpue():
@@ -243,8 +258,9 @@ def test_write_instantaneous_and_cumulative_cpue():
         ],
     )
     assert result.exit_code == 0
-    assert os.path.exists(output_path)
+    gtt.assert_exist(output_path)
     assert_code_200(result)
+    gtt.if_exist_remove(output_path)
 
 
 def test_write_csv_probability_entrypoint():
@@ -280,8 +296,9 @@ def test_write_csv_probability_entrypoint():
         ],
     )
     assert result.exit_code == 0
-    assert os.path.exists(output_path)
+    gtt.assert_exist(output_path)
     assert_code_200(result)
+    gtt.if_exist_remove(output_path)
 
     response = write_csv_probability(
         input_path, bootstrapping_number, output_path, window_length, None
@@ -315,8 +332,9 @@ def test_write_posterior_results():
         ],
     )
     assert result.exit_code == 0
-    assert os.path.exists(output_path)
+    gtt.assert_exist(output_path)
     assert_code_200(result)
+    gtt.if_exist_remove(output_path)
 
 
 def test_write_probability_figure_entrypoint():
@@ -336,6 +354,8 @@ def test_write_probability_figure_entrypoint():
     )
     assert result.exit_code == 0
     assert_code_200(result)
+    gtt.assert_exist(output_path)
+    gtt.if_exist_remove(output_path)
 
     response = write_probability_progress_figure(input_path, output_path)
     assert "http://islasgeci.org:100/write_probability_figure" in response.url
@@ -364,6 +384,7 @@ def test_render_instantaneous_and_cumulative_cpue_time_series():
     assert_successful_command(result)
     gtt.assert_exist(output_path)
     assert_code_200(result)
+    gtt.if_exist_remove(output_path)
 
 
 def test_plot_cumulative_series_cpue_by_season():
@@ -373,6 +394,7 @@ def test_plot_cumulative_series_cpue_by_season():
 
     output_path = "cumulative_by_season.png"
     input_path = "tests/data/esfuerzo_capturas_mensuales_gatos_socorro.csv"
+    gtt.if_exist_remove(output_path)
     result = runner.invoke(
         cli,
         [
@@ -386,6 +408,7 @@ def test_plot_cumulative_series_cpue_by_season():
     assert_code_200(result)
     response = plot_cumulative_cpue_series_by_season(input_path, output_path)
     assert "http://islasgeci.org:100/plot_cumulative_series_cpue_by_season" in response.url
+    gtt.if_exist_remove(output_path)
 
     input_path = "tests/data/feral_goat_aerial_monitoring.csv"
     result = runner.invoke(
@@ -409,6 +432,7 @@ def test_plot_cumulative_series_cpue_by_flight_entrypoint():
 
     output_path = "cumulative_by_flight.png"
     input_path = "tests/data/feral_goat_capture_effort.csv"
+    gtt.if_exist_remove(output_path)
     result = runner.invoke(
         cli,
         [
@@ -422,6 +446,8 @@ def test_plot_cumulative_series_cpue_by_flight_entrypoint():
     assert_code_200(result)
     response = plot_cumulative_series_cpue_by_flight(input_path, output_path)
     assert "http://islasgeci.org:100/plot_cumulative_series_cpue_by_flight" in response.url
+    gtt.assert_exist(output_path)
+    gtt.if_exist_remove(output_path)
 
 
 def test_plot_cpue_vs_cum_captures_entrypoint():
@@ -441,12 +467,15 @@ def test_plot_cpue_vs_cum_captures_entrypoint():
     )
     assert result.exit_code == 0
     assert_code_200(result)
+    gtt.assert_exist(output_path)
+    gtt.if_exist_remove(output_path)
 
     response = plot_cpue_vs_cum_captures(input_path, output_path)
     assert "http://islasgeci.org:100/plot_cpue_vs_cum_captures" in response.url
     gtt.assert_exist(output_path)
 
     assert_figure_format(format, output_path)
+    gtt.if_exist_remove(output_path)
 
 
 def test_plot_custom_cpue_vs_cum_captures_entrypoint():
@@ -459,6 +488,7 @@ def test_plot_custom_cpue_vs_cum_captures_entrypoint():
     config_path = "tests/data/hunt_config.json"
     format = "eps"
     output_path = f"figure.{format}"
+    gtt.if_exist_remove(output_path)
     result = runner.invoke(
         cli,
         [
@@ -476,6 +506,8 @@ def test_plot_custom_cpue_vs_cum_captures_entrypoint():
     response = plot_custom_cpue_vs_cum_captures(input_path, config_path, output_path)
     assert "http://islasgeci.org:100/plot_custom_cpue_vs_cum_captures" in response.url
     assert_figure_format(format, output_path)
+    gtt.assert_exist(output_path)
+    gtt.if_exist_remove(output_path)
 
 
 def test_version():
